@@ -944,7 +944,7 @@ VIEWS.game = function ({ id }) {
   function showIntro() {
     stop(); stage.innerHTML = ''; shell.querySelector('.game-overlay')?.remove();
     const best = state.games[id]?.best;
-    const ov = h('div', { class: 'game-overlay' }, h('div', { class: 'go-card' },
+    const ov = h('div', { class: 'game-overlay is-intro' }, h('div', { class: 'go-card' },
       h('div', { class: 'kind-tag' }, G.kind === 'word' ? 'Vocab puzzle' : 'Arcade game'),
       h('h2', null, G.title),
       h('p', null, G.blurb),
