@@ -1181,8 +1181,11 @@ function heroNeuron(cv) {
   }
   size();
   const onR = () => size(); addEventListener('resize', onR);
+  const ro = 'ResizeObserver' in window ? new ResizeObserver(() => size()) : null;
+  if (ro) ro.observe(cv);
   function draw() {
     if (stopped) return;
+    if (!W || !H || !nodes.length) size();
     t += 1;
     g.clearRect(0, 0, W, H);
     // links
@@ -1220,7 +1223,7 @@ function heroNeuron(cv) {
   }
   function bez(p0, p1, p2, p3, u) { const v = 1 - u; return v * v * v * p0 + 3 * v * v * u * p1 + 3 * v * u * u * p2 + u * u * u * p3; }
   raf = requestAnimationFrame(draw);
-  return () => { stopped = true; cancelAnimationFrame(raf); removeEventListener('resize', onR); };
+  return () => { stopped = true; cancelAnimationFrame(raf); removeEventListener('resize', onR); if (ro) ro.disconnect(); };
 }
 
 VIEWS.learn = function () {
