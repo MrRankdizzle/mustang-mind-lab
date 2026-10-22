@@ -225,7 +225,7 @@ ML.registerGame({
       rows = P.rows.map((R, ri) => {
         const boxes = [...R.a].map((_, i) => h('div', { class: 'ac-box' + (i === 0 ? ' ac-s-first' : ''), 'data-i': i }));
         const elR = h('div', { class: 'ac-row', role: 'listitem', 'data-r': ri },
-          h('div', { class: 'ac-clue' }, h('span', { class: 'ac-s-k' }, `${P.word[ri]}`), h('span', null, R.clue, h('span', { class: 'sr-only' }, `, ${R.a.length} letters`))),
+          h('div', { class: 'ac-clue' }, h('span', { class: 'ac-s-k' }, `${ri + 1}.`), h('span', null, R.clue, h('span', { class: 'sr-only' }, `, ${R.a.length} letters`))),
           h('div', { class: 'ac-boxes', 'aria-hidden': 'true' }, boxes));
         rowsEl.append(elR);
         return { R, el: elR, boxes, vals: Array(R.a.length).fill(''), hinted: Array(R.a.length).fill(false), done: false, failed: false, hints: 0, misses: 0 };
@@ -318,7 +318,7 @@ ML.registerGame({
       if (i < 0) return checkRow(false);
       row.vals[i] = row.R.a[i]; row.hinted[i] = true; row.hints++;
       row.boxes[i].classList.remove('ac-s-bad');
-      sfx.flip(); say(`Hint used on row ${P.word[active]}.`);
+      sfx.flip(); say(`Hint used on row ${active + 1}.`);
       cursor = Math.min(i + 1, row.vals.length - 1);
       paint();
       if (row.vals.every(v => v)) { if (row.vals.join('') === row.R.a) solveRow(active, false); else checkRow(true); }
